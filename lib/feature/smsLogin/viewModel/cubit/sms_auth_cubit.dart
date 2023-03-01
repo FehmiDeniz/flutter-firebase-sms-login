@@ -19,6 +19,8 @@ class SmsAuthCubit extends Cubit<SmsAuthState> {
   String? verify;
   String? inputNumber;
 
+  bool isSend = false;
+
   List<DropdownMenuItem<String>> get companyNames {
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(
@@ -53,6 +55,7 @@ class SmsAuthCubit extends Cubit<SmsAuthState> {
       );
       emit(SmsVerificationCompleted());
       logError = "Verify Sms Accept";
+      isSend=true;
     } catch (e) {
       logError = "Verify Sms Error!";
       emit(SmsVerificationFailed());

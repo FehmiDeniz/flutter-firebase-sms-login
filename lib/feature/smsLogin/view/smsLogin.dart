@@ -92,7 +92,7 @@ class SmsLoginScreen extends StatelessWidget {
                                 },
                                 child: Center(
                                   child: Text(
-                                    "Kod Yolla",
+                                    "Kod Gönder",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
@@ -103,7 +103,11 @@ class SmsLoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 5.h,
                       ),
-                      customContainer(
+                       read.isSend==true?
+                      Column(
+                        children: [
+                       
+                        customContainer(
                           TextFormField(
                             controller: read.codeController,
                             keyboardType: TextInputType.phone,
@@ -147,7 +151,7 @@ class SmsLoginScreen extends StatelessWidget {
                                         .copyWith(color: Colors.white),
                                   ),
                                 ),
-                              ))),
+                              ))),],):const SizedBox(),
                       Text("Durum  ${read.logError ?? ''}")
                     ],
                   ),
