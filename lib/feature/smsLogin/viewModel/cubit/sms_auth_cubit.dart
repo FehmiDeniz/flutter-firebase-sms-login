@@ -8,8 +8,12 @@ part 'sms_auth_state.dart';
 class SmsAuthCubit extends Cubit<SmsAuthState> {
   SmsAuthCubit() : super(SmsAuthInitial());
 
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController codeController = TextEditingController();
+
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  String? logError;
   String? selectedCompany;
   String? selectedAreaCode;
   String? verify;
@@ -31,33 +35,42 @@ class SmsAuthCubit extends Cubit<SmsAuthState> {
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(
           value: "+90", child: Text("Türkiye Cumhuriyeti +90")),
-      const DropdownMenuItem(
-          value: "+1", child: Text("Emulator AreaCode +1")),
+      const DropdownMenuItem(value: "+1", child: Text("Emulator AreaCode +1")),
     ];
     return menuItems;
   }
 
   Future<void> verifySms() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+1-555-123-4567',
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {
-        verify = verificationId;
-      },
-      codeAutoRetrievalTimeout: (verificationId) {},
-    );
-    emit(SmsVerificationCompleted());
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: setPhoneNumber(),
+        verificationCompleted: (PhoneAuthCredential credential) {},
+        verificationFailed: (FirebaseAuthException e) {},
+        codeSent: (String verificationId, int? resendToken) {
+          verify = verificationId;
+        },
+        codeAutoRetrievalTimeout: (verificationId) {},
+      );
+      emit(SmsVerificationCompleted());
+      logError = "Verify Sms Accept";
+    } catch (e) {
+      logError = "Verify Sms Error!";
+      emit(SmsVerificationFailed());
+    }
   }
 
   Future<void> codeSent() async {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verify!, smsCode: "123456");
-    print("credential $credential");
-    print("verify $verify");
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verify!, smsCode: codeController.text);
 
-    await auth.signInWithCredential(credential);
-    emit(SmsCodeSent());
+      await auth.signInWithCredential(credential);
+      emit(SmsCodeSent());
+      logError = "Login Succesfull";
+    } catch (e) {
+      logError = "Login Error!";
+      emit(SmsVerificationFailed());
+    }
   }
 
   selectedAreaCodeState() {
@@ -68,13 +81,12 @@ class SmsAuthCubit extends Cubit<SmsAuthState> {
     emit(SelectedCompany());
   }
 
-  setPhoneNumber() {
-    if (selectedAreaCode != null && codeController.text.isNotEmpty) {
-      var x = selectedAreaCode.toString() + codeController.text;
+  String? setPhoneNumber() {
+    if (selectedAreaCode != null && phoneNumberController.text.isNotEmpty) {
+      var x = "$selectedAreaCode-${phoneNumberController.text}";
       emit(SetPhoneNumber());
       print(x);
-    } else {
-      print("Değer Giriniz!");
+      return x;
     }
   }
 }

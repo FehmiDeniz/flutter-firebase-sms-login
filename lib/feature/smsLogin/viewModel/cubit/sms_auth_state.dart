@@ -11,10 +11,8 @@ class SmsVerificationFailed extends SmsAuthState {}
 
 class SmsCodeSent extends SmsAuthState {}
 
-class SmsTimeOut extends SmsAuthState {}
+class SelectedCompany extends SmsAuthState {}
 
-class SelectedCompany extends SmsAuthState{}
+class SelectedAreaCode extends SmsAuthState {}
 
-class SelectedAreaCode extends SmsAuthState{}
-
-class SetPhoneNumber extends SmsAuthState{}
+class SetPhoneNumber extends SmsAuthState {}
