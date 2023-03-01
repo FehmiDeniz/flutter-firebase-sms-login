@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "268275454259",
+    "project_id": "flutter-sms-app-27b1d",
+    "storage_bucket": "flutter-sms-app-27b1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268275454259:android:4909a6931aaf525030ee46",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase_sms_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268275454259-k99g9qc17v7tm2lj954mgg03i3gkf53m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3JN9GIa1pA4JXui3AgXqxW-OFYB_cdRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268275454259-k99g9qc17v7tm2lj954mgg03i3gkf53m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
