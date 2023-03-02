@@ -16,3 +16,5 @@ class SelectedCompany extends SmsAuthState {}
 class SelectedAreaCode extends SmsAuthState {}
 
 class SetPhoneNumber extends SmsAuthState {}
+
+class SignOut extends SmsAuthState {}

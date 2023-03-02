@@ -47,15 +47,18 @@ class SmsAuthCubit extends Cubit<SmsAuthState> {
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: setPhoneNumber(),
         verificationCompleted: (PhoneAuthCredential credential) {},
-        verificationFailed: (FirebaseAuthException e) {},
+        verificationFailed: (FirebaseAuthException e) {
+          logError = e.message;
+        },
         codeSent: (String verificationId, int? resendToken) {
           verify = verificationId;
         },
         codeAutoRetrievalTimeout: (verificationId) {},
+        timeout: const Duration(seconds: 120),
       );
       emit(SmsVerificationCompleted());
       logError = "Verify Sms Accept";
-      isSend=true;
+      isSend = true;
     } catch (e) {
       logError = "Verify Sms Error!";
       emit(SmsVerificationFailed());
@@ -91,5 +94,15 @@ class SmsAuthCubit extends Cubit<SmsAuthState> {
       print(x);
       return x;
     }
+    return null;
+  }
+
+  signOut() {
+    FirebaseAuth.instance.signOut();
+    codeController.clear();
+    phoneNumberController.clear();
+    isSend = false;
+    emit(SignOut());
+    logError = "Çıkış Yapıldı";
   }
 }

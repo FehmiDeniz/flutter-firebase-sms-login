@@ -103,56 +103,69 @@ class SmsLoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 5.h,
                       ),
-                       read.isSend==true?
-                      Column(
-                        children: [
-                       
-                        customContainer(
-                          TextFormField(
-                            controller: read.codeController,
-                            keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "6 Haneli Kod",
-                            ),
-                            validator: (value) {
-                              return value;
-                            },
-                          ),
-                          Colors.white),
-                      Container(
-                          margin: EdgeInsets.only(top: 2.h, bottom: 1.h),
-                          width: 100.w,
-                          height: 6.h,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff850000),
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () async {
-                                  //girilen numarayı alma
-                                  read.inputNumber =
-                                      read.phoneNumberController.text;
-                                  read.setPhoneNumber();
-                                  read.phoneNumberController.text = '';
-                                  print(read.setPhoneNumber());
+                      read.isSend == true
+                          ? Column(
+                              children: [
+                                customContainer(
+                                    TextFormField(
+                                      controller: read.codeController,
+                                      keyboardType: TextInputType.phone,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "6 Haneli Kod",
+                                      ),
+                                      validator: (value) {
+                                        return value;
+                                      },
+                                    ),
+                                    Colors.white),
+                                Container(
+                                    margin:
+                                        EdgeInsets.only(top: 2.h, bottom: 1.h),
+                                    width: 100.w,
+                                    height: 6.h,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff850000),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            //girilen numarayı alma
+                                            read.inputNumber =
+                                                read.phoneNumberController.text;
+                                            read.setPhoneNumber();
+                                            read.phoneNumberController.text =
+                                                '';
+                                            print(read.setPhoneNumber());
 
-                                  // read.verifySms(); //sms yollama kısmı
-                                  read.codeSent(); //gelen kodu girdiğinde gidilecek fonksiyon!
-                                },
-                                child: Center(
-                                  child: Text(
-                                    "Giriş Yap",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge!
-                                        .copyWith(color: Colors.white),
-                                  ),
-                                ),
-                              ))),],):const SizedBox(),
-                      Text("Durum  ${read.logError ?? ''}")
+                                            // read.verifySms(); //sms yollama kısmı
+                                            read.codeSent(); //gelen kodu girdiğinde gidilecek fonksiyon!
+                                          },
+                                          child: Center(
+                                            child: Text(
+                                              "Giriş Yap",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge!
+                                                  .copyWith(
+                                                      color: Colors.white),
+                                            ),
+                                          ),
+                                        ))),
+                              ],
+                            )
+                          : const SizedBox(),
+                      Text("Durum  ${read.logError ?? ''}"),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            read.signOut();
+                          },
+                          child: const Text("Log Out"))
                     ],
                   ),
                 ),
