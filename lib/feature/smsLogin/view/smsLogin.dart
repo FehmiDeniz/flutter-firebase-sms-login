@@ -138,10 +138,10 @@ class SmsLoginScreen extends StatelessWidget {
                                             read.setPhoneNumber();
                                             read.phoneNumberController.text =
                                                 '';
-                                            print(read.setPhoneNumber());
+                                          
 
-                                            // read.verifySms(); //sms yollama kısmı
-                                            read.codeSent(); //gelen kodu girdiğinde gidilecek fonksiyon!
+                                          
+                                            read.codeSent(); 
                                           },
                                           child: Center(
                                             child: Text(
@@ -192,7 +192,3 @@ class SmsLoginScreen extends StatelessWidget {
 }
 
 
-//devam et'e basınca read.verifySms();
-//bir sonraki kısımda codesent() 
-//girip girilmediğini kontrol et ve yazdır
-//textfield ile girilen telefon numarasını ayarla 
